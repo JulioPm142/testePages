@@ -1,33 +1,18 @@
-let count = 1
-document.getElementById("rad1").checked = true;
-
-setInterval(function(){
-    nextImg()
-},2000)
-
-function nextImg(){
-    count++
-    if(count>4){
-        count=1
-    }
-
-    document.getElementById("rad"+count).checked = true;
-    console.log("rad"+count)
-}
+document.addEventListener('DOMContentLoaded', function () {
+  console.log("DOM carregado, inicializando scripts...");
 
 
-
-var TrandingSlider = new Swiper('.tranding-slider', {
+  const projetosSlider = new Swiper('.projetos-slider', {
     effect: 'coverflow',
     grabCursor: true,
     centeredSlides: true,
     loop: true,
     slidesPerView: 'auto',
     coverflowEffect: {
-      rotate: 0,
+      rotate: -2,
       stretch: 0,
-      depth: 100,
-      modifier: 2.5,
+      depth: 400,
+      modifier: 1,
     },
     pagination: {
       el: '.swiper-pagination',
@@ -38,3 +23,29 @@ var TrandingSlider = new Swiper('.tranding-slider', {
       prevEl: '.swiper-button-prev',
     }
   });
+  console.log("Swiper inicializado com sucesso:", projetosSlider);
+
+  // Efeito de luz
+  const light = document.querySelector("#hex-grid .light");
+
+  if (light) {
+    console.log("Elemento .light encontrado, configurando movimento...");
+
+
+    const lightSize = 200;
+    const offset = lightSize / 2;
+    document.addEventListener('mousemove', function (e) {
+
+      const newLeft = e.clientX - offset;
+      const newTop = e.clientY - offset;
+
+      // Aplica a nova posição
+      light.style.left = `${newLeft}px`;
+      light.style.top = `${newTop}px`;
+
+    });
+
+    light.style.left = `${initialLeft}px`;
+    light.style.top = `${initialTop}px`;
+  }
+});

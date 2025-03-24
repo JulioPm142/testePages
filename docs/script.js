@@ -1,31 +1,62 @@
-var TrandingSlider = new Swiper('.tranding-slider', {
-  effect: 'coverflow',
-  grabCursor: true,
-  centeredSlides: true,
-  loop: true,
-  slidesPerView: 'auto',
-  slideToClickedSlide: true, // Permite selecionar o slide ao clicar
-  coverflowEffect: {
-    rotate: 0,
-    stretch: 0,
-    depth: 100,
-    modifier: 2.5,
-  },
-  pagination: {
-    el: '.swiper-pagination',
-    clickable: true,
-  },
-  navigation: {
-    nextEl: '.swiper-button-next',
-    prevEl: '.swiper-button-prev',
-  },
-});
+document.addEventListener('DOMContentLoaded', function () {
+  console.log("DOM carregado, inicializando scripts...");
 
-document.querySelectorAll(".tranding-slide-img a").forEach((link) => {
-  link.addEventListener("click", function (event) {
-    let slide = this.closest(".swiper-slide");
-    if (!slide.classList.contains("swiper-slide-active")) {
-      event.preventDefault(); // Evita clicar em slides que não estão ativos
-    }
+
+  const projetosSlider = new Swiper('.projetos-slider', {
+      effect: 'coverflow',
+      grabCursor: true,
+      centeredSlides: true,
+      loop: true,
+      slidesPerView: 'auto',
+      coverflowEffect: {
+          rotate: -2,
+          stretch: 0,
+          depth: 400,
+          modifier: 1,
+      },
+      pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+      },
+      navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+      }
   });
+  console.log("Swiper inicializado com sucesso:", projetosSlider);
+
+  // Efeito de luz
+  const light = document.querySelector("#hex-grid .light");
+
+  if (light) {
+      console.log("Elemento .light encontrado, configurando movimento...");
+
+   
+      const lightSize = 200; 
+
+
+      const offset = lightSize / 2; 
+
+
+      document.addEventListener('mousemove', function(e) {
+
+          const newLeft = e.clientX - offset;
+          const newTop = e.clientY - offset;
+
+          // Aplica a nova posição
+          light.style.left = `${newLeft}px`;
+          light.style.top = `${newTop}px`;
+
+          console.log(`Mouse: (${e.clientX}, ${e.clientY}), Luz: (${newLeft}, ${newTop})`);
+      });
+
+     
+      const initialLeft = (window.innerWidth / 2) - offset;
+      const initialTop = (window.innerHeight / 2) - offset;
+      light.style.left = `${initialLeft}px`;
+      light.style.top = `${initialTop}px`;
+      console.log(`Posição inicial da luz: (${initialLeft}, ${initialTop})`);
+  } else {
+      console.error("Elemento .light não encontrado!");
+  }
 });
